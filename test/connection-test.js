@@ -12,16 +12,16 @@ vows.describe('cradle/connection').addBatch({
     "Default connection settings": {
         topic: function () {
             cradle.setup({
-                host: "http://cloudhead.io",
-                port: 4242,
+                host: "http://192.168.0.50",
+                port: 5984,
                 milk: 'white'
             });
             return new(cradle.Connection);
         },
         "should be carried on to new Connections": function (c) {
-            assert.equal(c.host, "cloudhead.io");
+            assert.equal(c.host, "192.168.0.50");
             assert.equal(c.protocol, "http");
-            assert.equal(c.port, 4242);
+            assert.equal(c.port, 5984);
             assert.equal(c.options.milk, 'white');
             assert.equal(c.options.cache, true);
         },
@@ -29,78 +29,78 @@ vows.describe('cradle/connection').addBatch({
             topic: function () { return new(cradle.Connection)({milk: 'green'}) },
             "should override the defaults": function (c) {
                 assert.equal(c.options.milk, 'green');
-                assert.equal(c.port, 4242);
+                assert.equal(c.port, 5984);
             }
         },
         "with a host and port passed to Connection": {
-            topic: function () { return new(cradle.Connection)("255.255.0.0", 9696) },
+            topic: function () { return new(cradle.Connection)("192.168.0.50", 5984) },
             "should override the defaults": function (c) {
-                assert.equal(c.host, '255.255.0.0');
+                assert.equal(c.host, '192.168.0.50');
                 assert.equal(c.protocol, 'http');
-                assert.equal(c.port, 9696);
+                assert.equal(c.port, 5984);
             }
         },
         "with a host, port and options passed to Connection": {
-            topic: function () { return new(cradle.Connection)("4.4.4.4", 911, {raw: true}) },
+            topic: function () { return new(cradle.Connection)("192.168.0.50", 5984, {raw: true}) },
             "should override the defaults": function (c) {
-                assert.equal(c.host, '4.4.4.4');
+                assert.equal(c.host, '192.168.0.50');
                 assert.equal(c.protocol, 'http');
-                assert.equal(c.port, 911);
+                assert.equal(c.port, 5984);
                 assert.equal(c.options.raw, true);
             }
         },
         "with a host, port and options (secure: true) passed to Connection": {
-            topic: function () { return new(cradle.Connection)("4.4.4.4", 911, {raw: true, secure:true}) },
+            topic: function () { return new(cradle.Connection)("192.168.0.50", 5984, {raw: true, secure:false}) },
             "should override the defaults and assume https protocol": function (c) {
-                assert.equal(c.host, '4.4.4.4');
-                assert.equal(c.protocol, 'https');
-                assert.equal(c.port, 911);
+                assert.equal(c.host, '192.168.0.50');
+                assert.equal(c.protocol, 'http');
+                assert.equal(c.port, 5984);
                 assert.equal(c.options.raw, true);
             }
         },
         "with a host and port and protocol passed to Connection": {
-            topic: function () { return new(cradle.Connection)("http://4.4.4.4", 911, {raw: true, secure: true}) },
+            topic: function () { return new(cradle.Connection)("https://192.168.0.50", 5984, {raw: true, secure: true}) },
             "should override the defaults": function (c) {
-                assert.equal(c.host, '4.4.4.4');
-                assert.equal(c.protocol, 'http');
-                assert.equal(c.port, 911);
+                assert.equal(c.host, '192.168.0.50');
+                assert.equal(c.protocol, 'https');
+                assert.equal(c.port, 5984);
                 assert.equal(c.options.raw, true);
                 assert.equal(c.options.secure, true);
             }
         },
         "with a host and port passed as an object to Connection": {
-            topic: function () { return new(cradle.Connection)({ host: "https://4.4.4.4", port: 911, raw: true }) },
+            topic: function () { return new(cradle.Connection)({ host: "https://192.168.0.50", port: 5984, raw: true }) },
             "should override the defaults": function (c) {
                 assert.equal(c.options.secure, true);
-                assert.equal(c.host, '4.4.4.4');
+                assert.equal(c.host, '192.168.0.50');
                 assert.equal(c.protocol, 'https');
-                assert.equal(c.port, 911);
+                assert.equal(c.port, 5984);
                 assert.equal(c.options.raw, true);
             }
         },
         "with a the 'https' protocol": {
-            topic: function () { return new(cradle.Connection)("https://couch.io", 5984) },
+            topic: function () { return new(cradle.Connection)("https://192.168.0.50", 5984) },
             "should set 'secure' to `true`": function (c) {
                 assert.equal(c.protocol, 'https');
                 assert.equal(c.options.secure, true);
-                assert.equal(c.host, 'couch.io');
+                assert.equal(c.host, '192.168.0.50');
                 assert.equal(c.port, 5984);
             }
         },
         "with the port as part of the URL": {
-            topic: function () { return new(cradle.Connection)("https://couch.io:418") },
+            topic: function () { return new(cradle.Connection)("https://192.168.0.50:5984") },
             "should read the port from the URL": function (c) {
                 assert.equal(c.protocol, 'https');
                 assert.equal(c.options.secure, true);
-                assert.equal(c.host, 'couch.io');
-                assert.equal(c.port, 418);
+                assert.equal(c.host, '192.168.0.50');
+                assert.equal(c.port, 5984);
             }
         }
     }
 }).addBatch({
     "Connection": {
         topic: function () {
-            return new(cradle.Connection)('127.0.0.1', 5984, {cache: false});
+            return new(cradle.Connection)('192.168.0.50', 5984, {cache: false});
         },
         "getting server info": {
             topic: function (c) { c.info(this.callback) },
@@ -145,7 +145,7 @@ vows.describe('cradle/connection').addBatch({
 }).addBatch({
     "Connection": {
         topic: function () {
-            return new(cradle.Connection)('127.0.0.1', 5984, {cache: false});
+            return new(cradle.Connection)('192.168.0.50', 5984, {cache: false});
         },
         "create()": {
             "with no / in the name": {

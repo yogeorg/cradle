@@ -205,7 +205,7 @@ var cradle = require('../lib/cradle');
 vows.describe('cradle/database').addBatch({
     "Connection": {
         topic: function () {
-            return new(cradle.Connection)('127.0.0.1', 5984, {cache: false});
+            return new(cradle.Connection)('192.168.0.50', 5984, {cache: false});
         },
         "database() with no /": shouldQueryCouch('pigs'),
         "database() with /": shouldQueryCouch('animals/snorlax')

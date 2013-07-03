@@ -11,14 +11,14 @@ var seed = exports;
 seed.createDatabase = function (name, callback) {
   request({
     method: 'PUT',
-    url: 'http://127.0.0.1:5984/' + encodeURIComponent(name)
+    url: 'http://192.168.0.50:5984/' + encodeURIComponent(name)
   }, callback);
 };
 
 seed.deleteDatabase = function (name, callback) {
   request({
     method: 'DELETE',
-    url: 'http://127.0.0.1:5984/' + encodeURIComponent(name)
+    url: 'http://192.168.0.50:5984/' + encodeURIComponent(name)
   }, callback);
 };
 
@@ -32,7 +32,7 @@ seed.seedDatabase = function (name, callback) {
     function putDoc (doc, next) {
       request({
         method: 'PUT',
-        url: 'http://127.0.0.1:5984/' + encodeURIComponent(name) + '/' + doc._id,
+        url: 'http://192.168.0.50:5984/' + encodeURIComponent(name) + '/' + doc._id,
         body: JSON.stringify(doc)
       }, next);
     }
